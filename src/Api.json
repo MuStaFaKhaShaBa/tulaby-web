@@ -1,0 +1,31 @@
+{
+  "login": "/api/Account/login",
+  "profile": "/api/Students/profile",
+  "editProfile": "/api/Account/update",
+
+  "forgetPassword": "/api/ForgotPassword",
+  "changePassword": "/api/Account/change-password",
+
+  "getAllNewsPublic": "/api/News/public",
+  "getAllNewsPrivate": "/api/News/breaking",
+  "getNews": "/api/News",
+
+  "getSchedules": "/api/Schedules",
+  "getSchedule": "/api/Schedules/Schedule",
+
+  "getLecture":"/api/Lectures",
+  "getNextLecture":"/api/Lectures/upcoming",
+  "getActivatedLectures": "/api/Lectures/activated",
+  "getLectureStatistics":"/api/Lectures/LecturesStatistics",
+
+  "getSession":"/api/Sessions",
+  "getNextSession":"/api/Sessions/upcoming",
+  "getActivatedSessions": "/api/Sessions/activated",
+  "getSessionStatistics":"/api/Sessions/SessionsStatistics",
+
+  "getSubjects": "/api/Subjects",
+  "getSessions": "/api/getAllSessionSubjects",
+
+  "recordLectureAttend": "/api/LecturesAttendances/RecordAttendance",
+  "recordSessionAttend": "/api/SessionsAttendances/RecordAttendance"
+}
