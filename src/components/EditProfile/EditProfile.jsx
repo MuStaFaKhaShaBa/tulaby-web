@@ -178,7 +178,7 @@ export default function EditProfile({
               >
                 <div className="row g-4">
                   {/* Render Api Errors */}
-                  {UserEdit?.errors?.status && (
+                  {UserEdit?.errors?.statusCode && (
                     <div className="col-12">
                       <Error {...UserEdit.errors} />
                     </div>
