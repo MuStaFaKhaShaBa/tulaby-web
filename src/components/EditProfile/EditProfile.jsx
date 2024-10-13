@@ -95,7 +95,7 @@ export default function EditProfile({
     // values.gender = new Number(values.gender)
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
-      console.log({key,value});
+      // console.log({key,value});
       
       formData.append(key, value);
     });
@@ -105,7 +105,7 @@ export default function EditProfile({
       formData.append("image", pictureFile);
       // values.image = pictureFile
     }
-    console.log(values);
+    // console.log(values);
 
     try {
       const response = await axios.put(ApiUrl, formData, {
@@ -129,7 +129,7 @@ export default function EditProfile({
         handleStudentData(true);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       if (error.response) {
         const responseData = error.response;
