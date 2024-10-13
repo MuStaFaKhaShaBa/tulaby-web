@@ -27,7 +27,7 @@ const getSchedules = async (url, token) => {
 
     return data;
   } catch ({ response: { data } }) {
-    console.log(data);
+    // console.log(data);
     throw data;
   }
 };

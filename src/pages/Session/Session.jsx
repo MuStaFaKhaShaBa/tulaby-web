@@ -97,7 +97,7 @@ export default function Session() {
       </Helmet>
 
       <div className="container pt-5">
-        <div className="row bg-white gy-4 rounded-1 shadow-sm">
+        <div className="row bg-white gy-4 rounded-1 shadow-sm pb-4">
           {sessionIsLoading ? (
             <LoadingComponent />
           ) : dataSession?.statusCode == 204 ? (

@@ -43,11 +43,11 @@ export default function EventRelativeData({
 
         setEvent({ data: response.data, errors: {} });
         setDataIsLoading(null);
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         setEvent({ data: {}, errors: error.response.data });
         setDataIsLoading(null);
-        console.error(error);
+        // console.error(error);
       }
     };
 

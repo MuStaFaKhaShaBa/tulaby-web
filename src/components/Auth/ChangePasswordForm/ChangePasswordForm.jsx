@@ -59,7 +59,7 @@ export default function ChangePasswordForm({ unique = 1 }) {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setAPiErrors(error.response?.data ?? t("errors.apiError"));
       })
       .finally(() => {

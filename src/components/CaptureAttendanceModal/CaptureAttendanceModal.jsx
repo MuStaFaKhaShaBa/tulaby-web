@@ -53,7 +53,7 @@ export default function CaptureAttendanceModal({
 
     const url = type === "lecture" ? ApiUrl_Lecture : ApiUrl_Session;
     const { latitude, longitude } = await getPosition();
-    console.log({ latitude, longitude });
+    // console.log({ latitude, longitude });
 
     await axios
       .post(
@@ -82,7 +82,7 @@ export default function CaptureAttendanceModal({
   const handleInputChange = (e) => {
     setResult(e.target.value);
   };
-  console.log(response);
+  // console.log(response);
 
   return (
     <>

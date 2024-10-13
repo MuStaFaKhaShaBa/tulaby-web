@@ -55,8 +55,8 @@ export default function LoginForm({
       .catch(({ response }) => {
         setIsLoading(false);
         setAPiErrors(response.data);
-        // console.clear();
-        console.log(response);
+        console.clear();
+        // console.log(response);
       });
 
     // console.log(response);
