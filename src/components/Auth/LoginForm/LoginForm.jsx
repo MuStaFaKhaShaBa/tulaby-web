@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
 });
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.login
+  Apis.auth.login
 }`;
 
 export default function LoginForm({
@@ -55,8 +55,8 @@ export default function LoginForm({
       .catch(({ response }) => {
         setIsLoading(false);
         setAPiErrors(response.data);
-        console.clear();
-        // console.log(response);
+        // console.clear();
+        console.log(response);
       });
 
     // console.log(response);

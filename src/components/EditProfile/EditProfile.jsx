@@ -95,17 +95,8 @@ export default function EditProfile({
     // values.gender = new Number(values.gender)
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
-      // console.log({key,value});
-      
       formData.append(key, value);
     });
-
-    if (fileInputChanged) {
-      const pictureFile = document.getElementById("picture").files[0];
-      formData.append("image", pictureFile);
-      // values.image = pictureFile
-    }
-    // console.log(values);
 
     try {
       const response = await axios.put(ApiUrl, formData, {
@@ -152,7 +143,7 @@ export default function EditProfile({
   return (
     <>
       {UserEdit.updatedSuccess && <Toast_Default message={t("edit-success")} />}
-      {UserEdit.errors.status >= 400 && (
+      {UserEdit.errors.statusCode >= 400 && (
         <Toast_Default statusIsSuccess={false} message={t("errors.apiError")} />
       )}
 
@@ -238,33 +229,7 @@ export default function EditProfile({
                       errors={UserEdit.errors.errors?.[`$.${EditData.email}`]}
                     />
                   </div>
-
-                  <div className="col-sm-6">
-                    <div className="form-floating overflow-hidden">
-                      <input
-                        id="picture"
-                        type="file"
-                        name={"picture"}
-                        className="form-control"
-                        aria-label="Change Photo"
-                        onChange={() => setFileInputChanged(true)}
-                      />
-                      <label className="text-ellipsis" htmlFor={"picture"}>
-                        {t(`profile.form.picture`)}
-                      </label>
-
-                      {UserEdit.errors.errors?.[`$.image`]?.length > 0 &&
-                        UserEdit.errors.errors?.[`$.image`]?.map((x, i) => (
-                          <p
-                            key={i}
-                            className="text-danger text-start ps-2  mb-1 fs-3"
-                          >
-                            {x}
-                          </p>
-                        ))}
-                    </div>
-                  </div>
-
+                  
                   <div className="col-sm-6 col-lg-4">
                     <div className="form-floating">
                       <Field

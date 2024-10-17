@@ -20,12 +20,14 @@
 @import "./../../components/loading/Loading.style.scss";
 @import "./../../components/ProfileCard/ProfileCard.style.scss";
 @import "./../../components/CountDownTimer/CountDownTimer.style.scss";
-@import "./../../components/LectureTable/LectureTable.style.scss";
+@import "./../../components/EventTable/EventTable.style.scss";
 
 @import './../../components/News/SingleNews/SingleNews.style.scss';
 @import './../../components/News/NewsHeader/NewsHeader.style.scss';
 @import './../../components/News/NewsSlider/NewsSlider.style.scss';
 @import './../../components/SliderWithThumbnail/SliderWithThumbnail.style.scss';
+
+@import './../../components/ProfileCard/ProFileImage/ProFileImage.style.scss';
 
 // Layout style (Required file)
 @import "./../../layout/Layout/Layout.style.scss";

@@ -1,6 +1,6 @@
 .card-header {
-    --mainColor: --bs-primary;
-    --secColor: --bs-pink;
+    --mainColor: var(--bs-primary);
+    --secColor: var(--bs-pink);
     margin-top: -20px;
     background: linear-gradient(60deg, var(--mainColor), var(--secColor));
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),

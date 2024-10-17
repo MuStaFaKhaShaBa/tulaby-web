@@ -105,6 +105,9 @@ i18n
                         },
                         "Complete your profile": "Complete your profile",
                         "Edit Profile": "Edit Profile",
+                        "updateImage":"Update Image",
+                        "chooseImage":"Choose Image",
+                        "noImage":"No Image",
                         "edit-success": "Hello, Your Data Successfully Updated."
                     },
                     persons: {
@@ -270,6 +273,9 @@ i18n
                         },
                         "Complete your profile": "أكمل ملفك الشخصي",
                         "Edit Profile": "تعديل الملف الشخصي",
+                        "updateImage":"تعديل الصورة",
+                        "chooseImage":"اختر صورة",
+                        "noImage":"لا توجد صوره",
                         "edit-success": "مرحبا, بياناتك عُدلت بنجاح."
                     },
                     persons: {

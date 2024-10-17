@@ -13,7 +13,7 @@ import { useQuery } from "react-query";
 import Error from "../../components/Error/Error";
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.profile
+  Apis.profile.profile
 }`;
 
 export default function Profile() {
@@ -45,6 +45,8 @@ export default function Profile() {
         <LoadingComponent />
       ) : isError ? (
         <Error {...error} />
+      ) : data == null ? (
+        <Error message="Some Thing Went Wrong..!" />
       ) : (
         <div className="user-details py-0 py-xl-4">
           <div className="content">

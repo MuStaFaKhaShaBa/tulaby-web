@@ -7,9 +7,10 @@ import Error from "../Error/Error";
 import LoadingComponent from "../loading/Loading";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContextProvider";
+import ProFileImage from "./ProFileImage/ProFileImage";
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.profile
+  Apis.profile.profile
 }`;
 
 export const getProfileData = async (api, token) => {
@@ -38,12 +39,10 @@ export default function ProfileCard({ token, t, i18n, profilePage = false }) {
     {
       staleTime: 60 * 60 * 60,
       onSuccess: (data) => {
-        updateUser({ ...User, imageName: data.user.imageName });
+        updateUser({ ...User, imageName: data?.user?.imageName });
       },
     }
   );
-
-  // console.log(data);
 
   return (
     <div className="card card-profile placeholder-glow position-relative">
@@ -54,14 +53,21 @@ export default function ProfileCard({ token, t, i18n, profilePage = false }) {
       ) : (
         <>
           <div
-            className={`card-avatar shadow-lg img-thumbnail rounded-circle ${
-              data.user.imageName ? "" : "placeholder"
+            className={`card-avatar position-relative shadow-lg img-thumbnail rounded-circle overflow-hidden d-flex justify-content-center align-items-center ${
+              User.imageName ? "" : "placeholder"
             }`}
+            style={{ width: "150px", height: "150px" }} // You can adjust these values based on the desired size
           >
-            <div className="">
-              <img className="w-100" src={data.user.imageName} />
+            <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+              <img
+                className="img-fluid" // This ensures the image respects the aspect ratio
+                src={User.imageName}
+                alt="Profile"
+                style={{ objectFit: "cover", width: "100%", height: "100%" }} // Ensures the image covers the circular box fully
+              />
             </div>
           </div>
+
           <div className="card-body">
             <div className="d-flex gap-3 mb-3 align-items-center justify-content-center">
               <Link
@@ -92,11 +98,12 @@ export default function ProfileCard({ token, t, i18n, profilePage = false }) {
                 </Link>
               </>
             ) : (
-              <>
-                <Link to={`/`} className="btn btn-primary w-50 mt-4">
+              <div className="d-flex justify-content-center mt-4 gap-2">
+                <Link to={`/`} className="btn btn-primary">
                   {t("misc.Home")}
                 </Link>
-              </>
+                <ProFileImage User={{ User, updateUser }} t={t} />
+              </div>
             )}
           </div>
         </>

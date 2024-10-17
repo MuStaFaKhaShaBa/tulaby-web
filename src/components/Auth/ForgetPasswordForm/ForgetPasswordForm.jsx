@@ -25,7 +25,7 @@ const validationSchema = Yup.object({
 });
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.forgetPassword
+  Apis.auth.forgetPassword
 }`;
 
 export default function ForgetPasswordForm({
