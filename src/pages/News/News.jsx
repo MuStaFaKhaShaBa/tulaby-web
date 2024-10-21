@@ -17,9 +17,9 @@ import { IconFilter } from "@tabler/icons-react";
 
 export const ApiUrl_Public = `${
   import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY
-}${Apis.getAllNewsPublic}`;
+}${Apis.news.getAllNewsPublic}`;
 const ApiUrl_Private = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.getAllNewsPrivate
+  Apis.news.getAllNewsPrivate
 }`;
 
 const handleQueryFormat = (query) => {

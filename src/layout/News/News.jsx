@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 
 export const ApiUrl_Public = `${
   import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY
-}${Apis.getAllNewsPublic}?pagination.pageSize=2&Navigations.EnablePublisher=true`;
+}${Apis.news.getAllNewsPublic}?pagination.pageSize=2&Navigations.EnablePublisher=true`;
 const ApiUrl_Private = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.getAllNewsPrivate
+  Apis.news.getAllNewsPrivate
 }?pagination.pageSize=2&Navigations.EnablePublisher=true`;
 
 export const getAllNewsAPI = async (url, t = null, token = "") => {

@@ -10,7 +10,7 @@ import Apis from "./../../../Api.json";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 
 const ApiUrl_Public = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.getAllNewsPublic
+  Apis.news.getAllNewsPublic
 }`;
 
 function NewsSlider({ i18n, t }) {

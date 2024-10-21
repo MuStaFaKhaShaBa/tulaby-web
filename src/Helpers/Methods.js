@@ -1,10 +1,15 @@
 export function extractValues(obj1, obj2) {
   const result = {};
+  
   for (const key in obj1) {
     if (obj2.hasOwnProperty(key)) {
-      result[key] = obj2[key] ?? undefined;
+      // Check if the value is undefined, null, "undefined" (string), or "null" (string)
+      result[key] = (obj2[key] === undefined || obj2[key] === null || obj2[key] === "undefined" || obj2[key] === "null") 
+                    ? "" 
+                    : obj2[key];
     }
   }
+  
   return result;
 }
 

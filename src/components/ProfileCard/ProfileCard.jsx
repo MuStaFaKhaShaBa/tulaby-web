@@ -105,6 +105,11 @@ export default function ProfileCard({ token, t, i18n, profilePage = false }) {
                 <ProFileImage User={{ User, updateUser }} t={t} />
               </div>
             )}
+
+            <p className="text-muted text-start mt-3 mb-0" style={{ fontSize: ".9rem" }}>
+              <span className="fw-bolder px-1 text-primary">{t("TuLaBy")}</span>
+              {t("misc.speech")}
+            </p>
           </div>
         </>
       )}

@@ -9,9 +9,20 @@
     "forgetPassword": "/api/ForgotPassword",
     "changePassword": "/api/Account/change-password"
   },
-  "getAllNewsPublic": "/api/News/public",
-  "getAllNewsPrivate": "/api/News/breaking",
-  "getNews": "/api/News",
+  "news": {
+    "getAllNewsPublic": "/api/News/public",
+    "getAllNewsPrivate": "/api/News/breaking",
+    "getNews": "/api/News",
+
+    "action": {
+      "base": "/api/News",
+      "likes": {
+        "add":"likes/increment",
+        "remove":"likes/decrement"
+      },
+      "views": "views"
+    }
+  },
 
   "getSchedules": "/api/Schedules",
   "getSchedule": "/api/Schedules/Schedule",

@@ -68,7 +68,7 @@ const validationSchema = Yup.object({
 });
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.editProfile
+  Apis.profile.editProfile
 }`;
 
 export default function EditProfile({

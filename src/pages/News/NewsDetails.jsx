@@ -13,12 +13,27 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContextProvider";
 import NewsSlider from "../../components/News/NewsSlider/NewsSlider";
 import Error from "../../components/Error/Error";
-import { IconEye, IconPencil, IconThumbUpFilled } from "@tabler/icons-react";
+import {
+  IconEye,
+  IconPencil,
+  IconThumbDownFilled,
+  IconThumbUpFilled,
+} from "@tabler/icons-react";
 import SliderWithThumbnail from "../../components/SliderWithThumbnail/SliderWithThumbnail";
+import Toast_Default from "../../components/Toasts/Toasts";
 
 const ApiUrl = `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
-  Apis.getNews
+  Apis.news.getNews
 }`;
+
+const newsApiAction = (isLikesAction, id, isIncrement = true) => {
+  let segment = Apis.news.action[isLikesAction ? "likes" : "views"];
+  if (isLikesAction) segment = isIncrement ? segment.add : segment.remove;
+
+  return `${import.meta.env.VITE_REACT_APP_BASE_URL_API_KEY}${
+    Apis.news.action.base
+  }/${id}/${segment}`;
+};
 
 const getNewsDetails = async (id) => {
   try {
@@ -26,6 +41,82 @@ const getNewsDetails = async (id) => {
     return data;
   } catch ({ response: { data } }) {
     throw data;
+  }
+};
+
+const handleNewsAction = async (
+  newsId,
+  token,
+  setNews,
+  isIncrement = true,
+  isLikesAction = true
+) => {
+  // Retrieve localStorage data
+  const localData = JSON.parse(window.localStorage.getItem("newsItems")) || [];
+
+  // Find the index of the current news item in localStorage
+  const currentNewsIndex = localData.findIndex(
+    (news) => news.id === newsId && news.token === token
+  );
+
+  try {
+    // Determine the API endpoint based on the action (likes or views)
+    const api = newsApiAction(isLikesAction, newsId, isIncrement);
+
+    // Make the PUT request to the API with the token authorization
+    const response = await axios.put(
+      api,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // Log the response for debugging
+    console.log(response.data);
+
+    // Update the state with the new like or view count
+    setNews((prev) => ({
+      ...prev,
+      data: {
+        ...prev.data,
+        likes: prev.data.likes + (isLikesAction ? (isIncrement ? 1 : -1) : 0),
+        views: prev.data.views + (!isLikesAction ? 1 : 0),
+      },
+      isLikedNewsBefore: isLikesAction
+        ? isIncrement
+          ? true
+          : false
+        : prev.isLikedNewsBefore,
+      response: { ...response.data },
+    }));
+
+    // Update localStorage data
+    if (currentNewsIndex !== -1) {
+      // Update existing news item in localStorage
+      localData[currentNewsIndex] = {
+        ...localData[currentNewsIndex],
+        likes: isLikesAction && isIncrement ? 1 : 0,
+        views: !isLikesAction ? 1 : 0,
+      };
+    } else {
+      // Add new entry for the news item in localStorage
+      localData.push({
+        id: newsId,
+        token: token,
+        likes: isLikesAction && isIncrement ? 1 : 0,
+        views: !isLikesAction ? 1 : 0,
+      });
+    }
+
+    // Save the updated localData back to localStorage
+    window.localStorage.setItem("newsItems", JSON.stringify(localData));
+  } catch (error) {
+    // Handle error case and update the response part of the state
+    setNews((prev) => ({
+      ...prev,
+      response: error.response
+        ? { ...error.response.data }
+        : { message: "An error occurred", messageAR: "حدث خطأ" },
+    }));
   }
 };
 
@@ -37,6 +128,12 @@ export default function NewsDetails() {
     data: {},
     isLoading: true,
     error: null,
+    isLikedNewsBefore: false,
+    response: {
+      statusCode: null,
+      message: "",
+      messageAR: "",
+    },
   });
   const [isLoadingNews, setIsLoadingNews] = useState(true);
 
@@ -44,9 +141,36 @@ export default function NewsDetails() {
     setIsLoadingNews(true);
     getNewsDetails(id)
       .then((res) => {
+        // Retrieve localStorage data
+        const localData =
+          JSON.parse(window.localStorage.getItem("newsItems")) || [];
+
+        // Find the index of the current news item in localStorage
+        const currentNewsIndex = localData.findIndex(
+          (news) => news.id === id && news.token === User.token
+        );
+
+        if (currentNewsIndex == -1) {
+          const newNewsAction = {
+            id,
+            token: User.token,
+
+            likes: 0,
+            views: 1,
+          };
+          localData.push(newNewsAction);
+          window.localStorage.setItem("newsItems", JSON.stringify(localData));
+          console.log("send View Update");
+
+          handleNewsAction(id, User.token, setNews, null, false);
+        }
         setNews((prev) => ({
           ...prev,
           data: res,
+          isLikedNewsBefore:
+            currentNewsIndex == -1
+              ? false
+              : localData[currentNewsIndex].likes == 1,
           isLoading: false,
         }));
         setIsLoadingNews(false);
@@ -70,6 +194,42 @@ export default function NewsDetails() {
         </title>
         <link rel="icon" href="../../assets/icons/news.svg" />
       </Helmet>
+
+      {news.response.statusCode && (
+        <Toast_Default
+        statusIsSuccess={news.response.statusCode < 400}
+          message={
+            i18n.language == "en"
+              ? news.response.message
+              : news.response.messageAR
+          }
+          time={4000}
+        />
+      )}
+
+      {news.response.statusCode && news.isLikedNewsBefore==true && (
+        <Toast_Default
+        statusIsSuccess={news.response.statusCode < 400}
+          message={
+            i18n.language == "en"
+              ? news.response.message
+              : news.response.messageAR
+          }
+          time={4000}
+        />
+      )}
+
+      {news.response.statusCode && news.isLikedNewsBefore==false && (
+        <Toast_Default
+        statusIsSuccess={news.response.statusCode < 400}
+          message={
+            i18n.language == "en"
+              ? news.response.message
+              : news.response.messageAR
+          }
+          time={4000}
+        />
+      )}
 
       {news.isLoading ? (
         <LoadingComponent />
@@ -187,7 +347,33 @@ export default function NewsDetails() {
                                   <span className="fs-3">
                                     {news.data.likes}
                                   </span>
-                                  <IconThumbUpFilled size={15} />
+                                  <button
+                                    type="button"
+                                    onClick={(e) =>
+                                      news.isLikedNewsBefore
+                                        ? handleNewsAction(
+                                            id,
+                                            User.token,
+                                            setNews,
+                                            false
+                                          )
+                                        : handleNewsAction(
+                                            id,
+                                            User.token,
+                                            setNews
+                                          )
+                                    }
+                                    className="btn p-0 m-0 lh-1 border-0"
+                                  >
+                                    {news.isLikedNewsBefore ? (
+                                      <IconThumbDownFilled
+                                        title="bj"
+                                        size={17}
+                                      />
+                                    ) : (
+                                      <IconThumbUpFilled size={17} />
+                                    )}
+                                  </button>
                                 </div>
                               </div>
 
@@ -203,7 +389,7 @@ export default function NewsDetails() {
                                   <span className="fs-3">
                                     {news.data.views}
                                   </span>
-                                  <IconEye size={15} />
+                                  <IconEye size={17} />
                                 </div>
                               </div>
                             </div>
@@ -236,7 +422,10 @@ export default function NewsDetails() {
                       </div>
 
                       {news.data.images.length > 0 && (
-                        <SliderWithThumbnail title={news.data.title} news={news.data} />
+                        <SliderWithThumbnail
+                          title={news.data.title}
+                          news={news.data}
+                        />
                       )}
                     </>
                   )}
